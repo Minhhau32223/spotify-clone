@@ -6,13 +6,16 @@ import Display from './components/Display';
 import {PlayerContext} from './context/PlayerContext'
 
 
+
 const App = () => {
 
   const {audioRef,track} = useContext(PlayerContext);
-  console.log("Audio source:", track.file);
+  console.log("Audio source:", track?.file);
 
   return (
+
     <div>
+     
          <div className='bg-black h-screen w-full'>
   
           <div className="h-[90%] flex  w-max-[100%]"> 
@@ -21,9 +24,10 @@ const App = () => {
           <Display/>
           </div>
           <Player />
-          <audio ref={audioRef} src={track.file} ></audio>
+          <audio ref={audioRef} src={track?.file} ></audio>
     </div>
 
+    
 </div>
   )
 }
