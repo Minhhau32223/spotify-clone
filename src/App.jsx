@@ -1,15 +1,20 @@
-import React, { useContext } from 'react'
+import React, { useContext ,useState} from 'react'
 import Player from './components/Player';
 import Slidebar from './components/Slidebar'
 import "tailwindcss" ;
 import Display from './components/Display';
 import {PlayerContext} from './context/PlayerContext'
+import Login from './components/Login';
 
 
 const App = () => {
 
   const {audioRef,track} = useContext(PlayerContext);
   console.log("Audio source:", track.file);
+  const {isLoggedIn, setIsLoggedIn} = useState(false);
+  if (!isLoggedIn) {
+    return <Login onLogin={()=>isLoggedIn(true)}/>;
+  }
 
   return (
     <div>
