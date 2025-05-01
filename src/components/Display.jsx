@@ -3,17 +3,35 @@ import DisplayHome from './DisplayHome'
 import "tailwindcss"
 import { Route, Routes, useLocation} from 'react-router-dom'
 import DisplayAlbum from './DisplayAlbum'
-import { albumsData } from '../assets/assets'
+// import { albumsData } from '../assets/assets'
+import {   useState} from 'react'
+import axios from 'axios'
 const Display = () => {
 
   const displayRef = useRef();
   const location = useLocation();
+  const [albumsData , setAlbumsdata] = useState([]);
+  useEffect(() => {
+    console.log("useEffect is running");
+    axios.get("http://localhost:8000/api/albums/")
+        .then((res) => {
+            console.log("Data 1 playlist received:", res.data);
+            setAlbumsdata(res.data);
+        })
+        .catch((err) => {
+            console.log("Error:", err);
+        });
+  },[])
   const isAlbum = location.pathname.includes("album");
   console.log(isAlbum);
-  const albumId = isAlbum ? location.pathname.slice(-1) : ""
+  const albumId = isAlbum ? location.pathname.split('/').pop() : "";
+
   console.log(albumId);
-  const bgColor = albumsData[Number(albumId)].bgColor;
-  console.log(bgColor);
+  const album = albumsData[Number(albumId)];
+  const bgColor = album ? album.bgColor : "defaultColor";
+  
+
+ 
 
   useEffect(()=>{
     if (isAlbum) {

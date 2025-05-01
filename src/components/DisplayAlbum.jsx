@@ -26,7 +26,7 @@ const DisplayAlbum = () => {
     const [songs,setSongs] = useState([]);
      useEffect(() => {
     console.log('useEffect is running');
-    axios.get("http://localhost:8000/albums/"+id+"/songs/")
+    axios.get("http://localhost:8000/api/albums/"+id+"/songs/")
       .then((res) => {
         console.log('Song data album:', res.data);
         setSongs(res.data);
