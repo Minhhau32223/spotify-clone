@@ -1,6 +1,7 @@
 import React from "react";
 import "tailwindcss" ;
 import { assets } from "../assets/assets";
+import ChatBox from "./ChatBox";
 
  
  const Slidebar = () => {
@@ -37,6 +38,7 @@ import { assets } from "../assets/assets";
                 <p className="font-light">Chúng tôi sẽ cập nhật cho bạn thông tin về các tập mới</p>
                 <button className="px-4 py-1.5 bg-white text-[15px] text-black rounded-full mt-4 "> Duyệt xem podcast</button>
               </div>
+              <ChatBox/>
           </div>
      </div>
    )
