@@ -7,30 +7,25 @@ import {PlayerContext} from './context/PlayerContext'
 import Login from './components/Login';
 
 
-const App = () => {
 
-  const {audioRef,track} = useContext(PlayerContext);
-  console.log("Audio source:", track.file);
-  const {isLoggedIn, setIsLoggedIn} = useState(false);
+const App = () => {
+  const { audioRef, track } = useContext(PlayerContext);
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // dùng [] không phải {}
+
   if (!isLoggedIn) {
-    return <Login onLogin={()=>isLoggedIn(true)}/>;
+    return <Login onLogin={() => setIsLoggedIn(true)} />; // dùng setIsLoggedIn
   }
 
   return (
-    <div>
-         <div className='bg-black h-screen w-full'>
-  
-          <div className="h-[90%] flex  w-max-[100%]"> 
-    
-           <Slidebar/>
-          <Display/>
-          </div>
-          <Player />
-          <audio ref={audioRef} src={track.file} ></audio>
+    <div className="bg-black h-screen w-full">
+      <div className="h-[90%] flex w-max-[100%]">
+        <Slidebar />
+        <Display />
+      </div>
+      <Player />
+      <audio ref={audioRef} src={track?.file}></audio>
     </div>
+  );
+};
 
-</div>
-  )
-}
-
-export default App
+export default App;

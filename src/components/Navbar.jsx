@@ -11,13 +11,13 @@ const Navbar = () => {
         <div className="flex items-center gap-2">
           <img
             onClick={() => navigate(-1)}
-            className="w-8 bg-black p-2 rounded-2xl cursor-poiter"
+            className="w-8 bg-black p-2 rounded-2xl cursor-pointer caret-transparent"
             src={assets.arrow_left}
             alt=""
           />
           <img
             onClick={() => navigate(1)}
-            className="w-8 bg-black p-2 rounded-2xl cursor-poiter"
+            className="w-8 bg-black p-2 rounded-2xl cursor-pointer caret-transparent"
             src={assets.arrow_right}
             alt=""
           />
@@ -35,11 +35,11 @@ const Navbar = () => {
         </div>
       </div>
       <div className="flex items-center gap-2 mt-4">
-        <p className="bg-white text-black px-4 py-1 rounded-2xl cursor-pointer">
+        <p className="bg-white text-black px-4 py-1 rounded-2xl cursor-pointer caret-transparent">
           Tất cả
         </p>
-        <p className="bg-black px-4 py-1 rounded-2xl cursor-pointer">Âm nhạc</p>
-        <p className="bg-black px-4 py-1 rounded-2xl cursor-pointer">
+        <p className="bg-black px-4 py-1 rounded-2xl cursor-pointer caret-transparent" >Âm nhạc</p>
+        <p className="bg-black px-4 py-1 rounded-2xl cursor-pointer caret-transparent" >
           Podcasts
         </p>
       </div>

@@ -1,17 +1,17 @@
 import React, { useContext } from "react";
-import { assets, songsData } from "../assets/assets";
+import { assets} from "../assets/assets";
 import { PlayerContext } from "../context/PlayerContext";
 
 const Player = () => {
-  const { seekBar, seekBg, playState, play, pause,time } = useContext(PlayerContext);
+  const { seekBar, seekBg, playState, play, pause,time,track,previous,next,seekSong } = useContext(PlayerContext);
   console.log(playState);
   return (
     <div className="h-[10%] bg-black flex justify-between items-center p-4 text-white">
       <div className="hidden lg:flex item-center gap-4">
-        <img className="w-12" src={songsData[0].image} alt="" />
+        <img className="w-12" src={track?.image} alt="" />
         <div>
-          <p>{songsData[0].name}</p>
-          <p> {songsData[0].desc.slice(0, 12)}</p>
+          <p>{track?.name}</p>
+          <p> {track?.desc.slice(0, 12)}</p>
         </div>
       </div>
       <div className="flex flex-col items-center gap-1 m-auto">
@@ -21,7 +21,7 @@ const Player = () => {
             src={assets.shuffle_icon}
             alt=""
           />
-          <img className="w-4 cursor-pointer" src={assets.prev_icon} alt="" />
+          <img onClick={previous} className="w-4 cursor-pointer" src={assets.prev_icon} alt="" />
           {!playState ? (
             <img
               onClick={play}
@@ -37,13 +37,13 @@ const Player = () => {
               alt=""
             />
           )}
-          <img className="w-4 cursor-pointer" src={assets.next_icon} alt="" />
+          <img onClick={next} className="w-4 cursor-pointer" src={assets.next_icon} alt="" />
           <img className="w-4 cursor-pointer" src={assets.loop_icon} alt="" />
         </div>
         <div className=" flex items-center gap-5">
           <p>{time.currentTime.minute}:{time.currentTime.second}</p>
           <div
-            ref={seekBg}
+            ref={seekBg} onClick={seekSong}
             className="w-[60vw] max-w-[500px] bg-gray-300 rounded-full cursor-pointer "
           >
             <hr
