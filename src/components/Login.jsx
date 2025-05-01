@@ -19,7 +19,7 @@ const Login = ({onLogin}) => {
           const accessToken = response.data.access;
           localStorage.setItem('access_token', accessToken);
       
-          navigate('/DisplayHome.jsx');
+          navigate('/');
           onLogin();
           const token = localStorage.getItem('access_token');
 
