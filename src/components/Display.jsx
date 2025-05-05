@@ -3,6 +3,7 @@ import DisplayHome from './DisplayHome'
 import "tailwindcss"
 import { Route, Routes, useLocation} from 'react-router-dom'
 import DisplayAlbum from './DisplayAlbum'
+import DisplayPlaylist from './DisplayPlaylist'
 // import { albumsData } from '../assets/assets'
 import {   useState} from 'react'
 import axios from 'axios'
@@ -49,6 +50,7 @@ const Display = () => {
         <Routes>
             <Route path='/' element={<DisplayHome/>}/>
             <Route path='/album/:id' element={<DisplayAlbum/>}/>
+            <Route path='/playlist/:id' element={<DisplayPlaylist/>}/>
         </Routes>
     </div>
   )

@@ -42,7 +42,7 @@ const DisplayAlbum = () => {
     <div className='mt-10 flex gap-8 flex-col md:flex-row md:items-end'>
         <img className='w-48 rounded' src={album.image} alt=""/>
         <div className='flex flex-col'>
-            <p>Playlist</p>
+            <p>Album</p>
             <h2 className='text-5xl font-bold mb-4 md:text-7xl'>{album.name}</h2>
             <h4>{album.description}</h4>
             <p className='mt-1'>

@@ -28,6 +28,18 @@ const Login = ({onLogin}) => {
                 Authorization: `Bearer ${token}`
             }
             });
+
+            const userRes = await axios.get(`http://127.0.0.1:8000/api/users/email/${email}/`, {
+              headers: {
+                Authorization: `Bearer ${accessToken}`,
+              },
+            });
+      
+            const userData = userRes.data;
+      
+            // Lưu user info
+            localStorage.setItem('user_email', userData.email);
+            localStorage.setItem('user_id', userData.id); //
         } catch (error) {
           alert('Invalid email or password');
           console.error('Login failed', error);

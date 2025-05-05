@@ -1,5 +1,6 @@
 import { createContext, useEffect, useRef, useState } from "react";
 
+
 import axios from "axios";
 export const PlayerContext = createContext();
 const PlayerContextProvider = (props) => {
@@ -49,23 +50,37 @@ const PlayerContextProvider = (props) => {
   };
 
   const playWithId = async (id) => {
-    await setTrack(trackList[id]);
+    await trackList.map((item) => {
+      if (item.id === id) {
+        setTrack(item);
+  
+      }
+    })
     await audioRef.current.play();
-    setPlayState(true); 
+    setPlayState(true);
   }
+
   const previous =async () => {
-    if(track.id>0){
-      await setTrack(trackList[track.id-2]);
-      await audioRef.current.play();
-      setPlayState(true);
+    await trackList.map((item, index) => {
+    if(track.id === item.id && index > 0){
+       setTrack(trackList[index-1]);
+       audioRef.current.play();
+       setPlayState(true);
+
     }
+    
+   })
   }
   const next =async () => {
-    if(track.id<trackList.length-1){
-      await setTrack(trackList[track.id]);
-      await audioRef.current.play();
-      setPlayState(true);
-    }
+    await trackList.map((item, index) => {
+      if(track.id === item.id && index < trackList.length-1){
+         setTrack(trackList[index+1]);
+         audioRef.current.play();
+         setPlayState(true);
+  
+      }
+      
+     })
   }
   const seekSong =(e) =>{
     audioRef.current.currentTime = (e.nativeEvent.offsetX / seekBg.current.clientWidth) * audioRef.current.duration;
