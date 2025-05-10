@@ -7,6 +7,7 @@ import DisplayPlaylist from './DisplayPlaylist'
 // import { albumsData } from '../assets/assets'
 import {   useState} from 'react'
 import axios from 'axios'
+import { API_URL } from "../App";
 const Display = () => {
 
   const displayRef = useRef();
@@ -14,7 +15,7 @@ const Display = () => {
   const [albumsData , setAlbumsdata] = useState([]);
   useEffect(() => {
     console.log("useEffect is running");
-    axios.get("http://localhost:8000/api/albums/")
+    axios.get(API_URL+"api/albums/")
         .then((res) => {
             console.log("Data 1 playlist received:", res.data);
             setAlbumsdata(res.data);

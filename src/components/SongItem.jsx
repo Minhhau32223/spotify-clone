@@ -3,6 +3,7 @@ import { PlayerContext } from '../context/PlayerContext';
 import SongContextMenu from './SongContextMenu';
 import AddToPlaylistModal from './AddToPlaylistModal';
 import axios from 'axios';
+import { API_URL } from "../App";
 const SongItem = ({ name, image, desc, id }) => {
   const { playWithId } = useContext(PlayerContext);
   const [menuVisible, setMenuVisible] = useState(false);
@@ -12,7 +13,7 @@ const SongItem = ({ name, image, desc, id }) => {
   const u_id = localStorage.getItem('user_id');
   const fetchPlaylist=  async () => {
     try{
-      axios.get("http://localhost:8000/api/playlists/user/"+u_id+"/")
+      axios.get(API_URL+"api/playlists/user/"+u_id+"/")
           .then((res) => {
          
             setPlaylists(res.data);

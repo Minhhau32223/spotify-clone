@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import { API_URL } from "../App";
 
 const AddToPlaylistModal = ({ visible, playlists, onClose, song_id }) => {
   if (!visible) return null;
@@ -9,7 +10,7 @@ const AddToPlaylistModal = ({ visible, playlists, onClose, song_id }) => {
       const formData = new FormData();
       formData.append('playlist_id', playlistId);
          formData.append('song_id', song_id); // Thay đổi tên key nếu cần thiết
-      await axios.post('http://127.0.0.1:8000/api/playlist-songs/create/',   formData);
+      await axios.post(API_URL+'api/playlist-songs/create/',   formData);
 
       // Đóng modal sau khi thêm thành công
       onClose();

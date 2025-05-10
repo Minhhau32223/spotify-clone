@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import { API_URL } from '../App';
 
 const SongContextMenu = ({ visible, position, onAddToPlaylist, song_id, onDownload, onClose }) => {
   if (!visible) return null;
@@ -10,7 +11,7 @@ const SongContextMenu = ({ visible, position, onAddToPlaylist, song_id, onDownlo
       formData.append("song_id", song_id);
       formData.append("user_id", localStorage.getItem("user_id")); // nếu cần user_id
 
-      await axios.post("http://127.0.0.1:8000/api/favorite-songs/create/", formData);
+      await axios.post(API_URL+"api/favorite-songs/create/", formData);
       alert("Đã thêm vào yêu thích!");
     } catch (error) {
       console.error("Lỗi khi thêm vào yêu thích:", error);

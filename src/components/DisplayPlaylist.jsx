@@ -5,6 +5,7 @@ import { assets } from "../assets/assets";
 import { PlayerContext } from "../context/PlayerContext";
 import { useContext, useState } from "react";
 import axios from "axios";
+import { API_URL } from "../App";
 
 const DisplayPlaylist = () => {
 
@@ -14,7 +15,7 @@ const DisplayPlaylist = () => {
     const { playWithId } = useContext(PlayerContext);
     const fetchPlaylists = async () => {
        
-        axios.get("http://127.0.0.1:8000/api/playlists/" + id + "/")
+        axios.get(API_URL+"api/playlists/" + id + "/")
             .then((res) => {
                 console.log("Data 1 playlist received:", res.data);
                 setPlaylists(res.data);
@@ -25,7 +26,7 @@ const DisplayPlaylist = () => {
     }
     const fetchSongs = async () => {
         console.log("useEffect is running");
-        axios.get("http://127.0.0.1:8000/api/playlists/" + id + "/songs/")
+        axios.get(API_URL+"api/playlists/" + id + "/songs/")
             .then((res) => {
                 console.log("Song data playlist:", res.data);
                 setSongs(res.data);

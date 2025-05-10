@@ -4,16 +4,48 @@ import { useParams } from 'react-router-dom'
 import { assets  } from '../assets/assets';
 import { PlayerContext } from '../context/PlayerContext';
 import axios from 'axios';
+import SongContextMenu from './SongContextMenu';
+import AddToPlaylistModal from './AddToPlaylistModal';
+import { API_URL } from "../App";
 const DisplayAlbum = () => {
 
-    const {id} = useParams();
+  const {id} = useParams();
+  const [menuVisible, setMenuVisible] = useState(false);
+  const [menuPosition, setMenuPosition] = useState({ x: 0, y: 0 });
+  const [showPlaylistModal, setShowPlaylistModal] = useState(false);
+  const [playlists, setPlaylists] = useState([]);
+  const u_id = localStorage.getItem('user_id');
+  const fetchPlaylist=  async () => {
+    try{
+      axios.get(API_URL+"api/playlists/user/"+u_id+"/")
+          .then((res) => {
+         
+            setPlaylists(res.data);
+          })
+          .catch((err) => {
+            console.log('Error:', err);
+          });
+    }catch(err){
+      console.log(err)
+    }
+  }
+  useEffect(() => {
+    fetchPlaylist();
+  }, []);
+  const handleRightClick = (e) => {
+    e.preventDefault();
+    setMenuPosition({ x: e.pageX, y: e.pageY });
+    setMenuVisible(true);
+  };
+
+  
     console.log(id)
   
     const {playWithId} = useContext(PlayerContext);
     const [album, setAlbum] = useState([]);
     useEffect(() => {
         console.log('useEffect is running');
-        axios.get("http://localhost:8000/api/albums/"+id+"/")
+        axios.get(API_URL+"api/albums/"+id+"/")
           .then((res) => {
             console.log('Data 1 album received:', res.data);
             setAlbum(res.data);
@@ -63,7 +95,7 @@ const DisplayAlbum = () => {
     <hr/>
     {
         songs.map((item, index)=>(
-            <div onClick={()=>playWithId(item.id)} key={index} className='grid grid-cols-3 sm:grid-cols-4 gap-2 p-2 items-center text-[#a7a7a7] hover:bg-[#ffffff2b] cursor-pointer'>
+            <div onContextMenu={handleRightClick}  onClick={()=>playWithId(item.id)} key={index} className='grid grid-cols-3 sm:grid-cols-4 gap-2 p-2 items-center text-[#a7a7a7] hover:bg-[#ffffff2b] cursor-pointer'>
                 <p className='text-white'>
                     <b className='mr-4 text-[#a7a7a7]'>{index+1}</b>
                     <img className='inline w-10 mr-5' src={item.image} alt=""/>
@@ -72,6 +104,30 @@ const DisplayAlbum = () => {
                 <p className='text-[15px]'>{album.name}</p>
                 <p className='text-[15px] hidden sm:block'>2 days ago</p>
                 <p className='text-[15px] text-center'>{item.duration}</p>
+                <SongContextMenu
+  visible={menuVisible}
+  position={menuPosition}
+  song_id={id} // bạn cần có biến lưu bài hát đang chọn
+  onAddToPlaylist={() => {
+    setMenuVisible(false);
+    setShowPlaylistModal(true);
+  }}
+  onDownload={() => {
+    setMenuVisible(false);
+    console.log("Đang tải bài hát");
+  }}
+  onClose={() => setMenuVisible(false)} // để dùng trong handleAddToFavorite
+/>
+
+      <AddToPlaylistModal
+        visible={showPlaylistModal}
+        playlists={playlists}
+        song_id={id}
+        onClose={() => setShowPlaylistModal(false)}
+        onSelect={(playlistId) => {
+          console.log(`Thêm bài ${id} vào playlist ${playlistId}`);
+        }}
+      />
             </div>
         ))
     }

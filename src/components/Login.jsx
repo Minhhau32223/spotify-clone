@@ -3,6 +3,7 @@ import "tailwindcss"
 import { FaFacebookF, FaGoogle } from 'react-icons/fa';
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
+import { API_URL } from "../App";
 const Login = ({onLogin}) => {
 
     const [email, setEmail] = useState('');
@@ -11,7 +12,7 @@ const Login = ({onLogin}) => {
 
     const handleLogin = async () => {
         try {
-          const response = await axios.post('http://127.0.0.1:8000/api/token/', {
+          const response = await axios.post(API_URL+'api/token/', {
             email,
             password,
           });
@@ -23,13 +24,13 @@ const Login = ({onLogin}) => {
           onLogin();
           const token = localStorage.getItem('access_token');
 
-            await axios.get('http://127.0.0.1:8000/api/users/', {
+            await axios.get(API_URL+'api/users/', {
             headers: {
                 Authorization: `Bearer ${token}`
             }
             });
 
-            const userRes = await axios.get(`http://127.0.0.1:8000/api/users/email/${email}/`, {
+            const userRes = await axios.get(`${API_URL}api/users/email/${email}/`, {
               headers: {
                 Authorization: `Bearer ${accessToken}`,
               },

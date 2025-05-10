@@ -6,12 +6,13 @@ import "tailwindcss"
 import AlbumItem from './AlbumItem'
 import SongItem from './SongItem'
 import axios from 'axios'
+import { API_URL } from "../App";
 const DisplayHome = () => {
   const [albums,setAlbums] = useState([]);
   const [songs, setSongs] = useState([]);
   useEffect(() => {
     console.log('useEffect is running');
-    axios.get("http://localhost:8000/api/albums/")
+    axios.get(API_URL+"api/albums/")
       .then((res) => {
         setAlbums(res.data);
      
@@ -26,7 +27,7 @@ const DisplayHome = () => {
   useEffect(() => {
     
     console.log('useEffect is running');
-    axios.get("http://localhost:8000/api/songs/")
+    axios.get(API_URL+"api/songs/")
       .then((res) => {
         setSongs(res.data);
         console.log('songdata api:', res.data);

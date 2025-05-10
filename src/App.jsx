@@ -6,6 +6,7 @@ import Display from './components/Display';
 import {PlayerContext} from './context/PlayerContext'
 import Login from './components/Login';
 
+export const API_URL = 'http://127.0.0.1:8000/'
 
 
 const App = () => {

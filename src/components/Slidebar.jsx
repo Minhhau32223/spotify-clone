@@ -4,6 +4,7 @@ import ChatBox from "./ChatBox";
 import PlaylistItem from "./PlaylistItem";
 import axios from "axios";
 import AddPlaylistForm from "./AddPlaylistForm"; // Import form
+import { API_URL } from "../App";
 
 const Slidebar = () => {
     const user_id = localStorage.getItem("user_id");
@@ -11,7 +12,7 @@ const Slidebar = () => {
     const [showForm, setShowForm] = useState(false); // State to show form
 
     const fetchPlaylists = async () => {
-        axios.get(`http://localhost:8000/api/playlists/user/${user_id}/`)
+        axios.get(`${API_URL}api/playlists/user/${user_id}/`)
             .then((res) => {
                 console.log('Danh sách phát:', res.data);
                 setPlaylists(res.data);
@@ -22,10 +23,11 @@ const Slidebar = () => {
     };
 
     const handleCreatePlaylist = (name) => {
-        axios.post("http://localhost:8000/api/playlists/", {
-            name: name,
-            user_id: user_id
-        }).then(() => {
+        const formData = new FormData();
+        formData.append('name', name);
+        formData.append('user_id', user_id); 
+        axios.post( API_URL+"api/playlists/create/", 
+           formData).then(() => {
             setShowForm(false); // Close form
             fetchPlaylists(); // refresh danh sách
         }).catch((err) => {
@@ -88,7 +90,7 @@ const Slidebar = () => {
 
                 <div>
                     <p className="m-2.5 p-1 ">Danh sách phát của bạn</p>
-                    <div className="flex overflow-y-auto space-y-2 w-full flex-col">
+                    <div className="flex  space-y-2 w-[95%] flex-col  h-[70%] ml-3">
                         {playlists.map((item, index) => (
                             <PlaylistItem key={index} id={item.id} name={item.name} />
                         ))}

@@ -87,24 +87,43 @@ const PlayerContextProvider = (props) => {
   
   }
 
-  useEffect(()=>{
-    setTimeout(() => {
-        audioRef.current.ontimeupdate =() => {
-            seekBar.current.style.width = (Math.floor(audioRef.current.currentTime / audioRef.current.duration* 100))  + "%";
-            setTime({
-                currentTime: {
-                    second: Math.floor(audioRef.current.currentTime % 60),
-                    minute: Math.floor(audioRef.current.currentTime / 60),
-                  },
-                  totalTime: {
-                    second: Math.floor(audioRef.current.duration % 60),
-                    minute: Math.floor(audioRef.current.duration / 60),
-                  },
-                }
-            )
-        }
-    },1000)
-  },[audioRef])
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+  
+    const handleTimeUpdate = () => {
+      const currentTime = audio.currentTime;
+      const duration = audio.duration || 1;
+  
+      if (seekBar.current) {
+        seekBar.current.style.width = Math.floor((currentTime / duration) * 100) + "%";
+      }
+  
+      setTime({
+        currentTime: {
+          second: Math.floor(currentTime % 60),
+          minute: Math.floor(currentTime / 60),
+        },
+        totalTime: {
+          second: Math.floor(duration % 60),
+          minute: Math.floor(duration / 60),
+        },
+      });
+    };
+  
+    const handleLoadedMetadata = () => {
+      audio.addEventListener("timeupdate", handleTimeUpdate);
+    };
+  
+    audio.addEventListener("loadedmetadata", handleLoadedMetadata);
+  
+    return () => {
+      audio.removeEventListener("loadedmetadata", handleLoadedMetadata);
+      audio.removeEventListener("timeupdate", handleTimeUpdate);
+    };
+  }, [track]); // track thay đổi thì cập nhật lại audio
+  
+  
  
   
   
